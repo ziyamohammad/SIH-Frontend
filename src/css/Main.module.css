@@ -4,8 +4,23 @@
 
 .main{
     width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:20px;
+    z-index: 54545;
+  
+    background-image:url(../sea.png);
+background-size:100vw 100vh;
+background-repeat: no-repeat;
+
+}
+.main1{
+    width:100%;
     height:auto;
     display:flex;
+
     align-items: center;
     gap:20px;
     padding:20px 20px 20px 20px;
@@ -115,8 +130,8 @@ text-align: center;
 
 /* dashboard */
 .dashboard{
-  height:200vh;
-  overflow:auto;
+  z-index: 1;
+  height:100vh;
   display:grid;
   width:100%;
   background: linear-gradient(to bottom, rgb(253, 237, 221,1), rgb(255, 237, 221,1), rgb(255, 255, 255,1));

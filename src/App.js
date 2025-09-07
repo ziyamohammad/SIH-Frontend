@@ -6,9 +6,9 @@ import Main from './components/Main';
 
 function App() {
   return (
+    
     <div className="App">
       <Router>
-        <Navbar/>
         <Routes>
           <Route path="/" element={<Main/>}/>
         </Routes>

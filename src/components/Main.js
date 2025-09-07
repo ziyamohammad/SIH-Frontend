@@ -1,11 +1,14 @@
 import React from 'react'
 import styles from "../css/Main.module.css"
 import { Link } from 'react-router'
+import Navbar from './Navbar'
 
 const Main = () => {
   return (
     <>
     <div className={styles.main}>
+      <Navbar/>
+      <div className={styles.main1}>
       <div className={styles.authority}>
          <span className={styles.head}>
             For Authority
@@ -26,6 +29,7 @@ const Main = () => {
          <button className={styles.report}>Report</button>
          <span className={styles.join}>Don't have an account?</span>
          <Link to ="/citisignup" className={styles.link}>Sign Up</Link>
+      </div>
       </div>
     </div>
     <div className={styles.dashboard}>
