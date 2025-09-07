@@ -34,6 +34,17 @@ const Main = () => {
     </div>
     <div className={styles.dashboard}>
       <h2>Disaster Dashboard</h2>
+      <div className={styles.grid}>
+      {[0,1,2,3,4,5].map((item)=>{
+        return(
+          <div className={styles.disasters}>
+            <span className={styles.title}>🌊 Tsunami Alert</span>
+            <span className={styles.source}>Chennai . INCOIS</span>
+            <span className={styles.date}>5 Sep 2025</span>
+          </div>
+        )
+      })}
+      </div>
     </div>
     </>
   )
