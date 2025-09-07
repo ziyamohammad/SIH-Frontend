@@ -73,7 +73,7 @@ function AuthSignup() {
                 <label for ="confirm">Confirm Password</label>
                 <input type="text" placeholder="Confirm Password" value={confirmpass} onChange={(e)=>{setConfirmpass(e.target.value)}}/>
             </div>
-            <button>Create Authority Account</button>
+            <button className={styles.but}>Create Authority Account</button>
         </form>
         <div className={styles.login}>
         <span className={styles.log}>Already have an account?</span>
