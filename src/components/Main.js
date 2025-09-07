@@ -29,7 +29,7 @@ const Main = () => {
       </div>
     </div>
     <div className={styles.dashboard}>
-      
+      <h2>Disaster Dashboard</h2>
     </div>
     </>
   )
