@@ -48,6 +48,7 @@ border-radius: 12px;
     overflow: auto;
     display:flex;
     flex-direction: column;
+    scrollbar-width: none;
     align-items: center;
     gap:10px;
     padding:20px 30px;
@@ -98,6 +99,10 @@ letter-spacing:2px;
 .name1{
  width:45%;
  height:auto;
+  display: flex;
+    flex-direction: column;
+    gap:10px;
+
 
 }
 input{
