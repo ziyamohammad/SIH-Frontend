@@ -22,12 +22,13 @@
 }
 .divider {
   width: 1.5px; 
-  height: 100%;
+  height: 110%;
   background: linear-gradient(
     to bottom,
-    rgba(1, 126, 210, 0),  
-    rgba(1, 126, 210, 1),  
-    rgba(1, 126, 210, 0)  
+     rgba(1, 126, 210, 0.1), 
+    rgba(0,0,0, 0.3),  
+    
+    rgba(1, 126, 210, 0.1)  
   );
   margin: 5px; 
 }
@@ -35,7 +36,7 @@
 font-family: "Gugi", sans-serif;
 font-weight: 400;
 padding-bottom:30px;
-font-size: 48px;
+font-size: 36px;
 letter-spacing: 4px;
 text-align: center;
 
@@ -44,7 +45,7 @@ text-align: center;
     font-family: "Gugi", sans-serif;
 font-weight: 400;
 color:white;
-font-size: 48px;
+font-size: 36px;
 letter-spacing: 4px;
 text-align: center;
 padding-bottom:30px;
@@ -52,31 +53,33 @@ padding-bottom:30px;
 .content{
   font-family: "Poppins", sans-serif;
 font-weight: 400;
-font-size: 24px;
+font-size: 16px;
 text-align: center;
 margin-bottom:20px;
+line-height: 30px;
+letter-spacing:2px;
 
 }
 .login{
    font-family: "Poppins", sans-serif;
 font-weight: 500;
-font-size: 24px;
+font-size: 20px;
 text-align: center;
-border-radius: 15px;
+border-radius: 12px;
 border:1px solid black;
-padding:10px 45px 10px 45px;
+padding:10px 34px ;
 background-color: white;
-margin-bottom:10px;
+
 
 }
 .report{
       font-family: "Poppins", sans-serif;
 font-weight: 500;
-font-size: 24px;
+font-size: 20px;
 text-align: center;
-border-radius: 15px;
+border-radius: 12px;
 border:1px solid black;
-padding:10px 40px 10px 40px;
+padding:10px 28px;
  background-color: rgba(1, 126, 211, 1);
  color:white;
 ;
@@ -86,8 +89,9 @@ padding:10px 40px 10px 40px;
     font-family: "Poppins", sans-serif;
 font-weight: 400;
 margin-top:10px;
-font-size: 24px;
+font-size: 18px;
 text-align: center;
+letter-spacing:2px;
 
 }
 a:-webkit-any-link {
@@ -97,7 +101,24 @@ margin-top:-10px;
     text-decoration:none;
       font-family: "Poppins", sans-serif;
 font-weight: 400;
+letter-spacing:2px;
 
-font-size: 24px;
+font-size: 16px;
 text-align: center;
+}
+/* @media screen and (max-width:769px){
+    .main{
+        flex-direction: column;
+    }
+} */
+
+
+/* dashboard */
+.dashboard{
+  height:200vh;
+  overflow:auto;
+  display:grid;
+  width:100%;
+  background: linear-gradient(to bottom, rgb(253, 237, 221,1), rgb(255, 237, 221,1), rgb(255, 255, 255,1));
+
 }
