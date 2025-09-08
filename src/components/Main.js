@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from "../css/Main.module.css"
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import Navbar from './Navbar'
 
 const Main = () => {
+   const navigate=useNavigate();
   return (
     <>
     <div className={styles.main}>
@@ -14,7 +15,7 @@ const Main = () => {
             For Authority
          </span>
          <span className={styles.content}>Stay informed with real-time hazard reports from citizens. With verified alerts and faster communication, authorities can coordinate responses effectively and ensure the safety of coastal communities.</span>
-         <button className={styles.login}>Login</button>
+         <button className={styles.login} onClick={()=>{navigate("/authlogin")}}>Login</button>
          <button className={styles.report}>Report</button>
          <span className={styles.join}>Don't have an account?</span>
          <Link to ="/authsignup" className={styles.link}>Join as Authority</Link>
@@ -25,7 +26,7 @@ const Main = () => {
             For Citizens
          </span>
          <span  className={styles.content}>Your eyes on the coast can make a real difference. By reporting hazards instantly and sharing vital information, you help protect lives and support safer shores for everyone.</span>
-         <button className={styles.login}>Login</button>
+         <button className={styles.login} onClick={()=>{navigate("/citilogin")}}>Login</button>
          <button className={styles.report}>Report</button>
          <span className={styles.join}>Don't have an account?</span>
          <Link to ="/citisignup" className={styles.link}>Sign Up</Link>
