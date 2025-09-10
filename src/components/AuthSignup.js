@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react'
 import styles from "../css/Authsignup.module.css"
-import { Link } from 'react-router'
+import axios from 'axios'
+import { toast } from "react-toastify";
 
 function AuthSignup() {
+    const[alert,setAlert]=useState([])
     const[name,setName]=useState("")
     const[email,setEmail]=useState("")
     const[location,setLocation]=useState("")
@@ -11,6 +13,7 @@ function AuthSignup() {
     const[agency,setAgency]=useState("")
     const[password,setPassword]=useState("")
     const[confirmpass,setConfirmpass]=useState("")
+    const [loading, setLoading] = useState(false)
     const images=[
         {
             src:"./img1.png"
@@ -26,6 +29,44 @@ function AuthSignup() {
             src:"./img4.png"
         },
     ]
+
+    const handleauthsignup = async (e) => {
+  e.preventDefault(); 
+  setLoading(true)
+  try {
+    const response = await axios.post(
+      'http://localhost:5000/api/v1/user/register/authority',
+      {
+        name: name,
+        officialEmail: email,
+        officeLocation: location,
+        agencyName: agency,
+        gender: gender,
+        password: password,
+        alerts: [],
+      },
+      { withCredentials: true }
+    );
+
+    console.log(response.data.rootUser.authorities);
+    setAlert(response.data.rootUser.authorities.find((a)=>a.name === name))
+    console.log(alert._id)
+    toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
+    setName("")
+    setEmail("")
+    setPassword("")
+    setAgency("")
+    setLocation("")
+    setGender("")
+    setConfirmpass("")
+
+  } catch (error) {
+    console.log("Some error occurred:", error);
+  }finally {
+      setLoading(false) // 👈 button loading end
+    }
+};
+
 
 
   return (
@@ -43,7 +84,7 @@ function AuthSignup() {
       </div>
       <div className={styles.form}>
         <h2>Register to contribute in Soceity</h2>
-        <form>
+        <form onSubmit={handleauthsignup}>
             <div className={styles.name}>
                 <label for ="name">Name</label>
                 <input type="text" placeholder="Enter your Full Name" value={name} onChange={(e)=>{setName(e.target.value)}}/>
@@ -74,11 +115,11 @@ function AuthSignup() {
                 <label for ="confirm">Confirm Password</label>
                 <input type="text" placeholder="Confirm Password" value={confirmpass} onChange={(e)=>{setConfirmpass(e.target.value)}}/>
             </div>
-            <button className={styles.but}>Create Authority Account</button>
+            <button className={styles.but} type="submit"  disabled={loading}>{loading ? "Creating Account..." : "Create Authority Account"}</button>
         </form>
         <div className={styles.login}>
         <span className={styles.log}>Already have an account?</span>
-        <span className={styles.log1}>Login Here</span>
+        <span className={styles.log1} >Login Here</span>
         </div>
       </div>
     </div>

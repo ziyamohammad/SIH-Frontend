@@ -1,14 +1,48 @@
 import React, { useState } from 'react'
 import styles from "../css/Citisignup.module.css"
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function CitiSignup() {
-    const[name,setName]=useState("")
+        const[name,setName]=useState("")
         const[email,setEmail]=useState("")
         const[location,setLocation]=useState("")
         const[gender,setGender]=useState("")
         const[age,setAge]=useState("")
         const[password,setPassword]=useState("")
         const[confirmpass,setConfirmpass]=useState("")
+        const [loading, setLoading] = useState(false) 
+        const handlecitisignup = async(e)=>{
+            e.preventDefault();
+            setLoading(true)
+       try {
+         const response = await axios.post('http://localhost:5000/api/v1/user/register/citizen',
+         {
+         name: name,
+         email: email,
+         age:age,
+         location:location,
+         gender:gender,
+         password:password,
+         alerts: [],
+       },
+       { withCredentials: true }
+    )
+     console.log(response)
+     toast.success("Citizen Registered successfully 🎉")
+     setName("")
+    setEmail("")
+    setPassword("")
+    setAge("")
+    setLocation("")
+    setGender("")
+    setConfirmpass("")
+    } catch (error) {
+        console.log("Something went wrong",error)
+       }finally {
+      setLoading(false)
+    }
+    }
   return (
     <div className={styles.citisignup}>
         <div className={styles.image}>
@@ -19,7 +53,7 @@ function CitiSignup() {
         <div className={styles.form}>
                 <h2>Join Samudram</h2>
                 <span className = {styles.content}>Be the Voice of the Coast</span>
-                <form>
+                <form onSubmit={handlecitisignup}>
                     <div className={styles.name}>
                         <label for ="name">Name</label>
                         <input type="text" placeholder="Enter your Full Name" value={name} onChange={(e)=>{setName(e.target.value)}}/>
@@ -50,7 +84,7 @@ function CitiSignup() {
                         <label for ="confirm">Confirm Password</label>
                         <input type="text" placeholder="Confirm Password" value={confirmpass} onChange={(e)=>{setConfirmpass(e.target.value)}}/>
                     </div>
-                    <button className={styles.but}>Create Account</button>
+                    <button className={styles.but} type="submit" disabled={loading}>{loading ? "Creating Account..." : "Create Account"}</button>
                 </form>
                 <div className={styles.login}>
                 <span className={styles.log}>Already have an account?</span>

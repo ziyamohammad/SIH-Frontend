@@ -1,8 +1,23 @@
 import React, { useState } from 'react'
 import styles from "../css/Authlogin.module.css"
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function AuthLogin() {
     const[authid,setAuthid]=useState("")
+
+    const handleauthlogin = async(e) =>{
+     e.preventDefault()
+     try {
+      const response = await axios.post("http://localhost:5000/api/v1/user/login/authority",{id:authid},{withCredentials:true})
+      console.log(response);
+      toast.success("Authority Loggedin Successfully 🎉")
+      setAuthid("")
+     } catch (error) {
+        console.log("Authority login unsuccessfull")
+     }
+
+    }
   return (
     <div className={styles.authlogin}>
        <div className={styles.form}>
@@ -18,12 +33,12 @@ function AuthLogin() {
               <span className={styles.hello}>Welcome Back</span>
               <span className={styles.instruction}>Please enter your detail to Login</span>
               <span className={styles.head}>Authority Login</span>
-              <form>
+              <form onSubmit={handleauthlogin}>
                   <div className={styles.name1}>
                       <label for ="id">Authority Id</label>
                       <input type="text" placeholder="Enter your Unique Authority ID" value={authid} onChange={(e)=>{setAuthid(e.target.value)}}/>
                   </div>
-                   <button className={styles.but}>Login</button>
+                   <button className={styles.but} type="submit">Login</button>
               </form>
               <div className={styles.login}>
                   <span className={styles.log}>Don't have an account?</span>

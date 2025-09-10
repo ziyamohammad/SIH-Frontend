@@ -1,9 +1,28 @@
 import React, { useState } from 'react'
 import styles from "../css/Citilogin.module.css"
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function CitiLogin() {
      const[email,setEmail]=useState("")
       const[password,setPassword]=useState("")
+
+      const handlecitilogin = async(e) =>{
+        e.preventDefault()
+        try {
+          const response = await axios.post("http://localhost:5000/api/v1/user/login/citizen",{
+            email:email,
+            password:password,
+          },{withCredentials:true}) 
+           console.log(response)
+           toast.success("Citizen Loggedin Successfully 🎉")
+           setEmail("")
+           setPassword("")
+        } catch (error) {
+          console.log("Citizen Login Unsuccessfull")
+        }
+       
+      }
   return (
     <div className={styles.citilogin}>
       <div className={styles.form}>
@@ -19,7 +38,7 @@ function CitiLogin() {
         <span className={styles.hello}>Welcome Back</span>
         <span className={styles.instruction}>Please enter your detail to Login</span>
         <span className={styles.head}>Citizen Login</span>
-        <form>
+        <form onSubmit={handlecitilogin}>
              <div className={styles.name1}>
                 <label for ="email">Email</label>
                 <input type="text" placeholder="Enter your Email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
@@ -29,7 +48,7 @@ function CitiLogin() {
                 <input type="text" placeholder="Enter your Password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
             </div>
             <p className={styles.forgot}>Forgot Your Password ?</p>
-             <button className={styles.but}>Login</button>
+             <button className={styles.but} type="submit">Login</button>
         </form>
         <div className={styles.login}>
             <span className={styles.log}>Don't have an account?</span>
