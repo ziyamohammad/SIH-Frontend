@@ -9,7 +9,7 @@ function AuthLogin() {
     const handleauthlogin = async(e) =>{
      e.preventDefault()
      try {
-      const response = await axios.post("http://localhost:5000/api/v1/user/login/authority",{id:authid},{withCredentials:true})
+      const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/login/authority",{id:authid},{withCredentials:true})
       console.log(response);
       toast.success("Authority Loggedin Successfully 🎉")
       setAuthid("")

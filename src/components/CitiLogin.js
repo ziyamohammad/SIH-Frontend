@@ -10,7 +10,7 @@ function CitiLogin() {
       const handlecitilogin = async(e) =>{
         e.preventDefault()
         try {
-          const response = await axios.post("http://localhost:5000/api/v1/user/login/citizen",{
+          const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/login/citizen",{
             email:email,
             password:password,
           },{withCredentials:true}) 

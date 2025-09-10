@@ -16,7 +16,7 @@ function CitiSignup() {
             e.preventDefault();
             setLoading(true)
        try {
-         const response = await axios.post('http://localhost:5000/api/v1/user/register/citizen',
+         const response = await axios.post('https://sih-backend-dsdf.onrender.com/api/v1/user/register/citizen',
          {
          name: name,
          email: email,

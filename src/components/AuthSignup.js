@@ -35,7 +35,7 @@ function AuthSignup() {
   setLoading(true)
   try {
     const response = await axios.post(
-      'http://localhost:5000/api/v1/user/register/authority',
+      'https://sih-backend-dsdf.onrender.com/api/v1/user/register/authority',
       {
         name: name,
         officialEmail: email,
