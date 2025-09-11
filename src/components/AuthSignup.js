@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from "../css/Authsignup.module.css"
 import axios from 'axios'
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 function AuthSignup() {
     const[alert,setAlert]=useState([])
-    const[click,setclick]=useState(false)
+    
     const[name,setName]=useState("")
     const[email,setEmail]=useState("")
     const[location,setLocation]=useState("")
@@ -36,7 +36,6 @@ function AuthSignup() {
     const handleauthsignup = async (e) => {
   e.preventDefault(); 
   setLoading(true)
-  setclick(true)
   try {
     const response = await axios.post(
       'https://sih-backend-dsdf.onrender.com/api/v1/user/register/authority',
@@ -52,12 +51,21 @@ function AuthSignup() {
       { withCredentials: true }
     );
 
-    console.log(response.data.rootUser.authorities);
-    setAlert(response.data.rootUser.authorities.find((a)=>a.name === name))
-    console.log(alert._id)
-    navigate("authlogin")
+    const newAuthority = response.data.rootUser.authorities.find(
+      (a) => a.name === name
+    );
+
+    setAlert(newAuthority); // agar future me state kaam aana hai to store kar lo
+
+    console.log(newAuthority._id);
+
+    toast.success(
+      `Your unique authority id is ${newAuthority._id} ! \n Please save it for login purpose 🎉`
+    );
+
+    navigate("/authlogin");
     
-    
+    toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
     setName("")
     setEmail("")
     setPassword("")
@@ -73,9 +81,6 @@ function AuthSignup() {
     }
 };
 
-useEffect(()=>{
-  toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
-},[click])
 
 
 
