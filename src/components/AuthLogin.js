@@ -16,7 +16,7 @@ function AuthLogin() {
       toast.success("Authority Loggedin Successfully 🎉")
       
       setAuthid("")
-      navigate("/")
+
      } catch (error) {
         console.log("Authority login unsuccessfull")
      }
