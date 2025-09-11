@@ -60,12 +60,9 @@ function AuthSignup() {
     console.log(newAuthority._id);
 
     toast.success(
-      `Your unique authority id is ${newAuthority._id} ! \n Please save it for login purpose 🎉`
+      `Your unique authority id is ${newAuthority._id} ! \n\n Please save it for login purpose 🎉`
     );
-
     navigate("/authlogin");
-    
-    toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
     setName("")
     setEmail("")
     setPassword("")
