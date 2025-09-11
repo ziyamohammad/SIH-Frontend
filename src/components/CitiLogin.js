@@ -22,6 +22,7 @@ function CitiLogin() {
            setPassword("")
         } catch (error) {
           console.log("Citizen Login Unsuccessfull")
+          toast.error("Citizen not Signed in")
         }finally {
       setLoading(false)
     }

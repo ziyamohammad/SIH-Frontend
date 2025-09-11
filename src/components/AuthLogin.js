@@ -10,7 +10,7 @@ function AuthLogin() {
     const navigate =useNavigate()
 
     const handleauthlogin = async(e) =>{
-    
+     
      e.preventDefault()
        setLoading(true)
      try {
@@ -22,6 +22,7 @@ function AuthLogin() {
 
      } catch (error) {
         console.log("Authority login unsuccessfull")
+        toast.error("Authority not Signed in")
      }finally {
       setLoading(false)
     }
