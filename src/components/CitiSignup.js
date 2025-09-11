@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from "../css/Citisignup.module.css"
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router'
 
 function CitiSignup() {
         const[name,setName]=useState("")
@@ -12,6 +13,7 @@ function CitiSignup() {
         const[password,setPassword]=useState("")
         const[confirmpass,setConfirmpass]=useState("")
         const [loading, setLoading] = useState(false) 
+        const navigate =useNavigate()
         const handlecitisignup = async(e)=>{
             e.preventDefault();
             setLoading(true)
@@ -30,6 +32,7 @@ function CitiSignup() {
     )
      console.log(response)
      toast.success("Citizen Registered successfully 🎉")
+     navigate("/citilogin")
      setName("")
     setEmail("")
     setPassword("")
@@ -88,7 +91,7 @@ function CitiSignup() {
                 </form>
                 <div className={styles.login}>
                 <span className={styles.log}>Already have an account?</span>
-                <span className={styles.log1}>Login Here</span>
+                <span className={styles.log1} onClick={()=>{navigate("/citilogin")}}>Login Here</span>
                 </div>
               </div>
       

@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import styles from "../css/Authlogin.module.css"
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router'
 
 function AuthLogin() {
     const[authid,setAuthid]=useState("")
+    const navigate =useNavigate()
 
     const handleauthlogin = async(e) =>{
      e.preventDefault()
@@ -13,6 +15,7 @@ function AuthLogin() {
       console.log(response);
       toast.success("Authority Loggedin Successfully 🎉")
       setAuthid("")
+      navigate("/")
      } catch (error) {
         console.log("Authority login unsuccessfull")
      }
@@ -42,7 +45,7 @@ function AuthLogin() {
               </form>
               <div className={styles.login}>
                   <span className={styles.log}>Don't have an account?</span>
-                  <span className={styles.log1}>Register Now</span>
+                  <span className={styles.log1} onClick={()=>{navigate("/authsignup")}}>Register Now</span>
               </div>
             </div>
              <div className={styles.image}>

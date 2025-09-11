@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import styles from "../css/Authsignup.module.css"
 import axios from 'axios'
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router';
 
 function AuthSignup() {
     const[alert,setAlert]=useState([])
+    const[alert1,setAlert1]=useState([])
     const[name,setName]=useState("")
     const[email,setEmail]=useState("")
     const[location,setLocation]=useState("")
@@ -14,6 +16,7 @@ function AuthSignup() {
     const[password,setPassword]=useState("")
     const[confirmpass,setConfirmpass]=useState("")
     const [loading, setLoading] = useState(false)
+    const navigate =useNavigate()
     const images=[
         {
             src:"./img1.png"
@@ -51,6 +54,8 @@ function AuthSignup() {
     console.log(response.data.rootUser.authorities);
     setAlert(response.data.rootUser.authorities.find((a)=>a.name === name))
     console.log(alert._id)
+    navigate("authlogin")
+    
     toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
     setName("")
     setEmail("")
@@ -119,7 +124,7 @@ function AuthSignup() {
         </form>
         <div className={styles.login}>
         <span className={styles.log}>Already have an account?</span>
-        <span className={styles.log1} >Login Here</span>
+        <span className={styles.log1} onClick={()=>{navigate("/authlogin")}}>Login Here</span>
         </div>
       </div>
     </div>

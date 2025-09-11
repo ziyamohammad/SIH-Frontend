@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import styles from "../css/Citilogin.module.css"
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router'
 
 function CitiLogin() {
      const[email,setEmail]=useState("")
       const[password,setPassword]=useState("")
-
+      const navigate =useNavigate()
       const handlecitilogin = async(e) =>{
         e.preventDefault()
         try {
@@ -16,6 +17,7 @@ function CitiLogin() {
           },{withCredentials:true}) 
            console.log(response)
            toast.success("Citizen Loggedin Successfully 🎉")
+           navigate("/")
            setEmail("")
            setPassword("")
         } catch (error) {
@@ -52,7 +54,7 @@ function CitiLogin() {
         </form>
         <div className={styles.login}>
             <span className={styles.log}>Don't have an account?</span>
-            <span className={styles.log1}>Register Now</span>
+            <span className={styles.log1} onClick={()=>{navigate("/citisignup")}}>Register Now</span>
         </div>
       </div>
        <div className={styles.image}>
