@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "../css/Authsignup.module.css"
 import axios from 'axios'
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 function AuthSignup() {
     const[alert,setAlert]=useState([])
-    const[alert1,setAlert1]=useState([])
+    
     const[name,setName]=useState("")
     const[email,setEmail]=useState("")
     const[location,setLocation]=useState("")
@@ -52,12 +52,11 @@ function AuthSignup() {
     );
 
     console.log(response.data.rootUser.authorities);
-    setAlert1(response.data.rootUser.authorities.find((a)=>a.name === name))
-    setAlert(alert1._id)
+    setAlert(response.data.rootUser.authorities.find((a)=>a.name === name))
     console.log(alert._id)
-    navigate("/authlogin")
+    navigate("authlogin")
     
-    toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
+    
     setName("")
     setEmail("")
     setPassword("")
@@ -72,6 +71,10 @@ function AuthSignup() {
       setLoading(false) // 👈 button loading end
     }
 };
+
+useEffect(()=>{
+  toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
+},[alert])
 
 
 
