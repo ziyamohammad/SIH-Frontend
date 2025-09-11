@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 function AuthSignup() {
     const[alert,setAlert]=useState([])
-    
+    const[click,setclick]=useState(false)
     const[name,setName]=useState("")
     const[email,setEmail]=useState("")
     const[location,setLocation]=useState("")
@@ -36,6 +36,7 @@ function AuthSignup() {
     const handleauthsignup = async (e) => {
   e.preventDefault(); 
   setLoading(true)
+  setclick(true)
   try {
     const response = await axios.post(
       'https://sih-backend-dsdf.onrender.com/api/v1/user/register/authority',
@@ -74,7 +75,7 @@ function AuthSignup() {
 
 useEffect(()=>{
   toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
-},[alert])
+},[click])
 
 
 
