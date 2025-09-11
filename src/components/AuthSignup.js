@@ -54,7 +54,7 @@ function AuthSignup() {
     console.log(response.data.rootUser.authorities);
     setAlert(response.data.rootUser.authorities.find((a)=>a.name === name))
     console.log(alert._id)
-    navigate("authlogin")
+    navigate("/authlogin")
     
     toast.success(`Your unique authority id is ${alert._id} ! \n Please save it for login purpose 🎉`)
     setName("")

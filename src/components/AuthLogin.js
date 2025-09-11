@@ -13,7 +13,8 @@ function AuthLogin() {
      try {
       const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/login/authority",{id:authid},{withCredentials:true})
       console.log(response);
-      toast.success("Authority Loggedin Successfully 🎉")
+      setTimeout(()=>{toast.success("Authority Loggedin Successfully 🎉")},3000)
+      
       setAuthid("")
       navigate("/")
      } catch (error) {
