@@ -16,9 +16,7 @@ function CitiLogin() {
             password:password,
           },{withCredentials:true}) 
            console.log(response)
-           setTimeout(()=>{toast.success("Citizen Loggedin Successfully 🎉")},3000)
-           navigate("/")
-           setEmail("")
+           toast.success("Citizen Loggedin Successfully 🎉")
            setPassword("")
         } catch (error) {
           console.log("Citizen Login Unsuccessfull")
