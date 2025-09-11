@@ -5,11 +5,13 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 
 function CitiLogin() {
+  const [loading, setLoading] = useState(false)
      const[email,setEmail]=useState("")
       const[password,setPassword]=useState("")
       const navigate =useNavigate()
       const handlecitilogin = async(e) =>{
         e.preventDefault()
+        setLoading(true)
         try {
           const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/login/citizen",{
             email:email,
@@ -48,11 +50,11 @@ function CitiLogin() {
                 <input type="text" placeholder="Enter your Password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
             </div>
             <p className={styles.forgot}>Forgot Your Password ?</p>
-             <button className={styles.but} type="submit">Login</button>
+             <button className={styles.but} type="submit" disabled={loading}>{loading ? "Logging In..." : "Login"}</button>
         </form>
         <div className={styles.login}>
             <span className={styles.log}>Don't have an account?</span>
-            <span className={styles.log1} onClick={()=>{navigate("/citisignup")}}>Register Now</span>
+            <span className={styles.log1} onClick={()=>{navigate("/citisignup")}}  >Register Now</span>
         </div>
       </div>
        <div className={styles.image}>

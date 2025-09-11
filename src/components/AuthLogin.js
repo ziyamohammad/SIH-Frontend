@@ -5,11 +5,14 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 
 function AuthLogin() {
+  const [loading, setLoading] = useState(false)
     const[authid,setAuthid]=useState("")
     const navigate =useNavigate()
 
     const handleauthlogin = async(e) =>{
+    
      e.preventDefault()
+       setLoading(true)
      try {
       const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/login/authority",{id:authid},{withCredentials:true})
       console.log(response);
@@ -42,7 +45,7 @@ function AuthLogin() {
                       <label for ="id">Authority Id</label>
                       <input type="text" placeholder="Enter your Unique Authority ID" value={authid} onChange={(e)=>{setAuthid(e.target.value)}}/>
                   </div>
-                   <button className={styles.but} type="submit">Login</button>
+                   <button className={styles.but} type="submit" disabled={loading}>{loading ? "Logging In..." : "Login"}</button>
               </form>
               <div className={styles.login}>
                   <span className={styles.log}>Don't have an account?</span>
