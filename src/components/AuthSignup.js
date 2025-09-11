@@ -52,7 +52,8 @@ function AuthSignup() {
     );
 
     console.log(response.data.rootUser.authorities);
-    setAlert(response.data.rootUser.authorities.find((a)=>a.name === name))
+    setAlert1(response.data.rootUser.authorities.find((a)=>a.name === name))
+    setAlert(alert1._id)
     console.log(alert._id)
     navigate("/authlogin")
     
