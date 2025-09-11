@@ -22,7 +22,9 @@ function AuthLogin() {
 
      } catch (error) {
         console.log("Authority login unsuccessfull")
-     }
+     }finally {
+      setLoading(false)
+    }
 
     }
   return (

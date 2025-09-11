@@ -22,7 +22,9 @@ function CitiLogin() {
            setPassword("")
         } catch (error) {
           console.log("Citizen Login Unsuccessfull")
-        }
+        }finally {
+      setLoading(false)
+    }
        
       }
   return (
