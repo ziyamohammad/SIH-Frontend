@@ -1,10 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "../css/Main.module.css"
 import { Link, useNavigate } from 'react-router'
 import Navbar from './Navbar'
+import { SquareX } from 'lucide-react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Main = () => {
    const navigate=useNavigate();
+   const[response,setResponse]=useState()
+   const[model,setModel]=useState(false)
+   const[message,setmessage]=useState("")
+   const[image,setImage]=useState()
+   const handleremove = () =>{
+   setModel(false)
+}
+
+const handlesubmit = async(e)=> {
+   e.preventDefault()
+   try {
+    const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",{
+     message:message,
+     reportImage:image
+    },{withCredentials:true})
+  const responsemessage = response.data
+  setResponse(responsemessage)
+ 
+   } catch (error) {
+    console.log(error)
+   }
+}
   return (
     <>
     <div className={styles.main}>
@@ -27,7 +52,7 @@ const Main = () => {
          </span>
          <span  className={styles.content}>Your eyes on the coast can make a real difference. By reporting hazards instantly and sharing vital information, you help protect lives and support safer shores for everyone.</span>
          <button className={styles.login} onClick={()=>{navigate("/citilogin")}}>Login</button>
-         <button className={styles.report}>Report</button>
+         <button className={styles.report} onClick={()=>{setModel(true)}}>Report</button>
          <span className={styles.join}>Don't have an account?</span>
          <Link to ="/citisignup" className={styles.link}>Sign Up</Link>
       </div>
@@ -47,6 +72,24 @@ const Main = () => {
       })}
       </div>
     </div>
+
+    {model && (
+      <div className={styles.modal}>
+        <div className={styles.innermodal}>
+          <span className={styles.cancel1} onClick={handleremove}><SquareX/></span>
+          <span className={styles.modelhead}>Report the Hazard</span>
+          <form onSubmit={handlesubmit} className={styles.reportform}>
+            <input type="file" className={styles.modalinput} value={image} placeholder='Upload your image'  onChange={(e) => setImage(e.target.files)}/>
+            <input type="text" className={styles.modalinput} value={message} placeholder='Comments'  onChange={(e) => setmessage(e.target.value)}/>
+            <button type="submit" className={styles.modalsubmit}>Submit Report</button>
+          </form>
+        {response && (<span className = {styles.res}>{response}</span>)}
+        </div>
+
+      </div>
+  )}
+  
+  
     </>
   )
 }
