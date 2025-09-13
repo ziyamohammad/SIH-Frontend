@@ -25,6 +25,7 @@ const handlesubmit = async(e)=> {
     formData.append("reportImage", image); // backend must accept multipart/form-data
    try {
     const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",formData,{withCredentials:true})
+    console.log(response.data)
   const responsemessage = response.data
   setResponse(responsemessage)
  
@@ -87,7 +88,7 @@ const handlesubmit = async(e)=> {
             <input type="text" className={styles.modalinput} value={message} placeholder='Comments'  onChange={(e) => setmessage(e.target.value)}/>
             <button type="submit" className={styles.modalsubmit} disabled={loading}>{loading ?"Generating Response...":"Submit Report"}</button>
           </form>
-        {response && (<span className = {styles.res}>{response}</span>)}
+        {response && (<span className = {styles.res}>{response.data || response.message}</span>)}
         </div>
 
       </div>
