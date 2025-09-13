@@ -20,11 +20,11 @@ const Main = () => {
 const handlesubmit = async(e)=> {
    e.preventDefault()
    setLoading(true)
+    const formData = new FormData();
+    formData.append("message", message);
+    formData.append("reportImage", image); // backend must accept multipart/form-data
    try {
-    const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",{
-     message:message,
-     reportImage:image
-    },{withCredentials:true})
+    const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",formData,{withCredentials:true})
   const responsemessage = response.data
   setResponse(responsemessage)
  
@@ -83,7 +83,7 @@ const handlesubmit = async(e)=> {
           <span className={styles.cancel1} onClick={handleremove}><SquareX/></span>
           <span className={styles.modelhead}>Report the Hazard</span>
           <form onSubmit={handlesubmit} className={styles.reportform}>
-            <input type="file" className={styles.modalinput} value={image} placeholder='Upload your image'  onChange={(e) => setImage(e.target.files)}/>
+            <input type="file" className={styles.modalinput}  placeholder='Upload your image'  onChange={(e) => setImage(e.target.files[0])}/>
             <input type="text" className={styles.modalinput} value={message} placeholder='Comments'  onChange={(e) => setmessage(e.target.value)}/>
             <button type="submit" className={styles.modalsubmit} disabled={loading}>{loading ?"Generating Response...":"Submit Report"}</button>
           </form>
