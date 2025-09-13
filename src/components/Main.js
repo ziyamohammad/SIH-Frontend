@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 
 const Main = () => {
    const navigate=useNavigate();
+    const [loading, setLoading] = useState(false)
    const[response,setResponse]=useState()
    const[model,setModel]=useState(false)
    const[message,setmessage]=useState("")
@@ -18,6 +19,7 @@ const Main = () => {
 
 const handlesubmit = async(e)=> {
    e.preventDefault()
+   setLoading(true)
    try {
     const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",{
      message:message,
@@ -28,6 +30,8 @@ const handlesubmit = async(e)=> {
  
    } catch (error) {
     console.log(error)
+   }finally{
+    setLoading(false)
    }
 }
   return (
@@ -81,7 +85,7 @@ const handlesubmit = async(e)=> {
           <form onSubmit={handlesubmit} className={styles.reportform}>
             <input type="file" className={styles.modalinput} value={image} placeholder='Upload your image'  onChange={(e) => setImage(e.target.files)}/>
             <input type="text" className={styles.modalinput} value={message} placeholder='Comments'  onChange={(e) => setmessage(e.target.value)}/>
-            <button type="submit" className={styles.modalsubmit}>Submit Report</button>
+            <button type="submit" className={styles.modalsubmit} disabled={loading}>{loading ?"Generating Response...":"Submit Report"}</button>
           </form>
         {response && (<span className = {styles.res}>{response}</span>)}
         </div>
