@@ -88,6 +88,7 @@ const handlesubmit = async(e)=> {
             <input type="text" className={styles.modalinput} value={message} placeholder='Comments'  onChange={(e) => setmessage(e.target.value)}/>
             <button type="submit" className={styles.modalsubmit} disabled={loading}>{loading ?"Generating Response...":"Submit Report"}</button>
           </form>
+          <h4 className ={styles.head4}>Response Generated</h4>
         {response && (<span className = {styles.res}>{response.data || response.message}</span>)}
         </div>
 
