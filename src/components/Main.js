@@ -25,10 +25,11 @@ const Main = () => {
    const[email,setEmail]=useState("")
    const[name,setName]=useState("")
    const[mssg,setMssg]=useState("")
-    const [points, setPoints] = useState([
-    { longitude: 72.8777, latitude: 19.0760 },
-  ])
-
+    const [points, setPoints] = useState(() => {
+  // Load saved points from localStorage if available
+  const saved = localStorage.getItem("points");
+  return saved ? JSON.parse(saved) : [{ longitude: 72.8777, latitude: 19.0760 }];
+});
 
 const getLocation = () => {
     if (navigator.geolocation) {
@@ -55,49 +56,61 @@ const getLocation = () => {
 }
 
 const handlesubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      // Step 1: Gemini API
-      const formData = new FormData();
-      formData.append("message", message);
-      formData.append("reportImage", image);
-      const geminiResponse = await axios.post(
-        "https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",
-        formData,
-        { withCredentials: true }
-      )
+  try {
+    // Step 1: Gemini API
+    const formData = new FormData();
+    formData.append("message", message);
+    formData.append("reportImage", image);
+    const geminiResponse = await axios.post(
+      "https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",
+      formData,
+      { withCredentials: true }
+    );
 
-      const responsemessage = geminiResponse.data
-      setResponse(responsemessage)
+    const responsemessage = geminiResponse.data;
+    setResponse(responsemessage);
 
-      // Step 2: Add new point
-      const newPoint = {
-        longitude: parseFloat(location.longitude),
-        latitude: parseFloat(location.latitude),
-      }
+    // Step 2: Add new point
+    const newPoint = {
+      longitude: parseFloat(location.longitude),
+      latitude: parseFloat(location.latitude),
+    };
 
-      const updatedPoints = [...points, newPoint]
-      setPoints(updatedPoints)
+   if (isNaN(newPoint.latitude) || isNaN(newPoint.longitude)) {
+  toast.error("Please provide a valid location");
+  setLoading(false);
+  return;
+}
 
-      // Step 3: Send updated points to cluster API
-      await axios.post("https://geo-point.onrender.com/cluster", {
-        points: updatedPoints
-      })
+const updatedPoints = [...points, newPoint];
+setPoints(updatedPoints);
+localStorage.setItem("points", JSON.stringify(updatedPoints)); // Save locally
 
-      // Step 4: Open Map in new tab
-      window.open("https://geo-point.onrender.com/", "_blank")
+// Step 3: Send all points from localStorage to cluster API
+const formattedPoints = updatedPoints.map(p => ({
+  latitude: Number(p.latitude),
+  longitude: Number(p.longitude)
+}));
+    // Step 3: Send all points from localStorage to cluster API
+    await axios.post("https://geo-point.onrender.com/cluster", {
+     points: formattedPoints
+    });
 
-      toast.success("Report submitted successfully ✅")
+    // Step 4: Open Map in new tab
+    window.open("https://geo-point.onrender.com/", "_blank");
 
-    } catch (error) {
-      console.log(error)
-      toast.error("Error submitting report ❌")
-    } finally {
-      setLoading(false)
-    }
+    toast.success("Report submitted successfully ✅");
+  } catch (error) {
+    console.log(error);
+    toast.error("Error submitting report ❌");
+  } finally {
+    setLoading(false);
   }
+};
+
 
 
 const handleauthreport = async(e) =>{
