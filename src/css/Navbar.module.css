@@ -43,6 +43,9 @@ color:white;
     letter-spacing:2px;
     color:white;
 }
+li,button{
+    cursor: pointer;
+}
 .mobilemenu{
     position: absolute;
     top:90px;
