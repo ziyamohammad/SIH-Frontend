@@ -96,7 +96,7 @@ const handlecontact = async(e) => {
     const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/sendmail",{
       gmail:email,
       name:name,
-      message:message
+      message:mssg
     },{withCredentials:true})
     console.log(response)
     toast.success("Query send successfully")
@@ -190,7 +190,7 @@ const handlecontact = async(e) => {
             </div>
 <input type="email" placeholder='Your Email' value={email} onChange={(e)=>{setEmail(e.target.value)}} />
 <input type="text" value={"+91"} className={styl.fixed}/><input type="number"  placeholder='Phone number' className={styl.number}/>
-<textarea name="" id="" rows={4} className={styl.textarea} value={message} onChange={(e)=>{setmessage(e.target.value)}} placeholder='How can we help?'></textarea>
+<textarea name="" id="" rows={4} className={styl.textarea} value={mssg} onChange={(e)=>{setMssg(e.target.value)}} placeholder='How can we help?'></textarea>
 <button className={styl.submit} onClick={handlecontact}>Submit</button>
             </div>
             <div className={styl.right}>
