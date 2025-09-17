@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import styles from "../css/Main.module.css"
 import style from "../css/About.module.css"
 import styl from "../css/Contact.module.css"
+import st from "../css/pop.module.css"
 import { Link, useNavigate } from 'react-router'
 import Navbar from './Navbar'
 import { SquareX } from 'lucide-react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+
 
 const Main = () => {
    const navigate=useNavigate();
@@ -15,6 +17,7 @@ const Main = () => {
    const[model,setModel]=useState(false)
    const[message,setmessage]=useState("")
    const[image,setImage]=useState()
+   const[asauthority, setAsauthority]=useState(true)
    const handleremove = () =>{
    setModel(false)
 }
@@ -155,7 +158,19 @@ const handlesubmit = async(e)=> {
 
       </div>
   )}
-  
+  {asauthority && (
+<div className={st.container}>
+  <div className={st.image}>
+    <img src="Frame.png" alt="" />
+  </div>
+  <div className={st.heading}>Verify as an authority</div>
+  <label htmlFor="in">Authority ID</label>
+  <input type="text" id='in' className={st.input} placeholder='Enter your Authority ID'/>
+  <button className={st.button}>Submit</button>
+</div>
+
+
+  )}
   
     </>
   )
