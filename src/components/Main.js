@@ -5,7 +5,7 @@ import styl from "../css/Contact.module.css"
 import st from "../css/pop.module.css"
 import { Link, useNavigate } from 'react-router'
 import Navbar from './Navbar'
-import { SquareX } from 'lucide-react'
+import { AxeIcon, SquareX } from 'lucide-react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -21,6 +21,12 @@ const Main = () => {
    const[id,setId]=useState("")
    const[otphandle,setOtphandle]=useState(false)
    const[otp,setOtp]=useState()
+   const[email,setEmail]=useState("")
+   const[name,setName]=useState("")
+   const[mssg,setMssg]=useState("")
+
+
+
    const handleremove = () =>{
    setModel(false)
    setAsauthority(false)
@@ -81,6 +87,25 @@ const handleotp = async(e) => {
    toast.error("otp not verified")
  }finally{
     setLoading(false)
+  }
+}
+
+const handlecontact = async(e) => {
+  e.preventDefault()
+  try {
+    const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/sendmail",{
+      gmail:email,
+      name:name,
+      message:message
+    },{withCredentials:true})
+    console.log(response)
+    toast.success("Query send successfully")
+    setName("")
+    setEmail("")
+    setmessage("");
+  } catch (error) {
+    console.log(error)
+    toast.error("Query not sent successfully")
   }
 }
   return (
@@ -161,12 +186,12 @@ const handleotp = async(e) => {
             <div className={styl.left}>
             <div className={styl.head1}>Send a message</div>
             <div className={styl.nameinput}>
-            <input type="text" className={styl.namefirst} placeholder='First Name'/><input type="text" className={styl.namesecond} placeholder='Last Name'/>
+            <input type="text" className={styl.namefirst}  value ={name} onChange={(e)=>{setName(e.target.value)}} placeholder='First Name'/><input type="text" className={styl.namesecond} placeholder='Last Name'/>
             </div>
-<input type="email" placeholder='Your Email' />
+<input type="email" placeholder='Your Email' value={email} onChange={(e)=>{setEmail(e.target.value)}} />
 <input type="text" value={"+91"} className={styl.fixed}/><input type="number"  placeholder='Phone number' className={styl.number}/>
-<textarea name="" id="" rows={4} className={styl.textarea} placeholder='How can we help?'></textarea>
-<button className={styl.submit}>Submit</button>
+<textarea name="" id="" rows={4} className={styl.textarea} value={message} onChange={(e)=>{setmessage(e.target.value)}} placeholder='How can we help?'></textarea>
+<button className={styl.submit} onClick={handlecontact}>Submit</button>
             </div>
             <div className={styl.right}>
               <div className={styl.head}>Get in Touch</div>
