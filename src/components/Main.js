@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 
 const Main = () => {
    const navigate=useNavigate();
+    const [location, setLocation] = useState({ latitude: "", longitude: "" });
     const [loading, setLoading] = useState(false)
    const[response,setResponse]=useState()
    const[model,setModel]=useState(false)
@@ -24,32 +25,80 @@ const Main = () => {
    const[email,setEmail]=useState("")
    const[name,setName]=useState("")
    const[mssg,setMssg]=useState("")
+    const [points, setPoints] = useState([
+    { longitude: 72.8777, latitude: 19.0760 },
+  ])
 
 
+const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setLocation({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          });
+        },
+        (err) => {
+          console.error(err);
+          alert("Unable to fetch location. Please enable location services.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  };
 
    const handleremove = () =>{
    setModel(false)
    setAsauthority(false)
 }
 
-const handlesubmit = async(e)=> {
-   e.preventDefault()
-   setLoading(true)
-    const formData = new FormData();
-    formData.append("message", message);
-    formData.append("reportImage", image); // backend must accept multipart/form-data
-   try {
-    const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",formData,{withCredentials:true})
-    console.log(response.data)
-  const responsemessage = response.data
-  setResponse(responsemessage)
- 
-   } catch (error) {
-    console.log(error)
-   }finally{
-    setLoading(false)
-   }
-}
+const handlesubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+
+    try {
+      // Step 1: Gemini API
+      const formData = new FormData();
+      formData.append("message", message);
+      formData.append("reportImage", image);
+      const geminiResponse = await axios.post(
+        "https://sih-backend-dsdf.onrender.com/api/v1/user/gemini/api",
+        formData,
+        { withCredentials: true }
+      )
+
+      const responsemessage = geminiResponse.data
+      setResponse(responsemessage)
+
+      // Step 2: Add new point
+      const newPoint = {
+        longitude: parseFloat(location.longitude),
+        latitude: parseFloat(location.latitude),
+      }
+
+      const updatedPoints = [...points, newPoint]
+      setPoints(updatedPoints)
+
+      // Step 3: Send updated points to cluster API
+      await axios.post("https://geo-point.onrender.com/cluster", {
+        points: updatedPoints
+      })
+
+      // Step 4: Open Map in new tab
+      window.open("https://geo-point.onrender.com/", "_blank")
+
+      toast.success("Report submitted successfully ✅")
+
+    } catch (error) {
+      console.log(error)
+      toast.error("Error submitting report ❌")
+    } finally {
+      setLoading(false)
+    }
+  }
+
 
 const handleauthreport = async(e) =>{
   e.preventDefault()
@@ -215,6 +264,16 @@ const handlecontact = async(e) => {
           <form onSubmit={handlesubmit} className={styles.reportform}>
             <input type="file" className={styles.modalinput}  placeholder='Upload your image'  onChange={(e) => setImage(e.target.files[0])}/>
             <input type="text" className={styles.modalinput} value={message} placeholder='Comments'  onChange={(e) => setmessage(e.target.value)}/>
+           
+            {location.latitude ?(
+              <>
+              <input type="text" value={location.latitude} readOnly />
+              <input type="text" value={location.longitude} readOnly />
+              </>
+            ):(
+               <button onClick={getLocation}>📍 Get My Location</button>
+            )}
+
             <button type="submit" className={styles.modalsubmit} disabled={loading}>{loading ?"Generating Response...":"Submit Report"}</button>
           </form>
           
