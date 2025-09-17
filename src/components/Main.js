@@ -55,6 +55,7 @@ const handleauthreport = async(e) =>{
      console.log(response)
      toast.success("Otp sent")
      setOtphandle(true)
+     setId("")
   } catch (error) {
      console.log(error)
      toast.error("Otp not sent successfully")
@@ -70,7 +71,7 @@ const handleotp = async(e) => {
      otp:otp
    },{withCredentials:true})
    console.log(response);
-   toast.success("Otp verifies successfully")
+   toast.success("Otp verified successfully")
    setModel(true)
  } catch (error) {
    console.log(error)
