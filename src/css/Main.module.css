@@ -214,7 +214,7 @@ text-align: center;
 /* dashboard */
 .dashboard{
   z-index: 1;
-  height:85vh;
+  height:auto;
   display:flex;
   flex-direction: column;
   width:100%;
@@ -308,7 +308,7 @@ line-height: normal;
     width: 50%;
 }
 .head{
-    color: #0077B6;
+    color: #000000;
 text-align: center;
 font-family: Poppins;
 font-size: 2rem;
@@ -334,3 +334,4 @@ font-weight: 400;
 line-height: normal;
 letter-spacing: 0.00875rem;
 }
+
