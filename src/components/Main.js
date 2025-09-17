@@ -17,9 +17,13 @@ const Main = () => {
    const[model,setModel]=useState(false)
    const[message,setmessage]=useState("")
    const[image,setImage]=useState()
-   const[asauthority, setAsauthority]=useState(true)
+   const[asauthority, setAsauthority]=useState(false)
+   const[id,setId]=useState("")
+   const[otphandle,setOtphandle]=useState(false)
+   const[otp,setOtp]=useState()
    const handleremove = () =>{
    setModel(false)
+   setAsauthority(false)
 }
 
 const handlesubmit = async(e)=> {
@@ -40,6 +44,39 @@ const handlesubmit = async(e)=> {
     setLoading(false)
    }
 }
+
+const handleauthreport = async(e) =>{
+  e.preventDefault()
+  setLoading(true)
+  try {
+     const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/authreport",{
+      id:id
+     },{withCredentials:true})
+     console.log(response)
+     toast.success("Otp sent")
+     otphandle(true)
+  } catch (error) {
+     console.log(error)
+     toast.error("Otp not sent successfully")
+  }finally{
+    setLoading(false)
+  }
+}
+
+const handleotp = async(e) => {
+  e.preventDefault()
+ try {
+   const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/verifyotp",{
+     otp:otp
+   },{withCredentials:true})
+   console.log(response);
+   toast.success("Otp verifies successfully")
+   setModel(true)
+ } catch (error) {
+   console.log(error)
+   toast.error("otp not verified")
+ }
+}
   return (
     <>
     <div className={styles.main}>
@@ -51,7 +88,7 @@ const handlesubmit = async(e)=> {
          </span>
          <span className={styles.content}>Stay informed with real-time hazard reports from citizens. With verified alerts and faster communication, authorities can coordinate responses effectively and ensure the safety of coastal communities.</span>
          <button className={styles.login} onClick={()=>{navigate("/authlogin")}}>Login</button>
-         <button className={styles.report}>Report</button>
+         <button className={styles.report} onClick={()=>{setAsauthority(true)}}>Report</button>
          <span className={styles.join}>Don't have an account?</span>
          <Link to ="/authsignup" className={styles.link}>Join as Authority</Link>
       </div>
@@ -160,13 +197,21 @@ const handlesubmit = async(e)=> {
   )}
   {asauthority && (
 <div className={st.container}>
+  <span className={styles.cancel1} onClick={handleremove}><SquareX/></span>
   <div className={st.image}>
     <img src="Frame.png" alt="" />
   </div>
   <div className={st.heading}>Verify as an authority</div>
-  <label htmlFor="in">Authority ID</label>
-  <input type="text" id='in' className={st.input} placeholder='Enter your Authority ID'/>
-  <button className={st.button}>Submit</button>
+  <label htmlFor="in">{otphandle===true?"Enter otp":"Authority ID"}</label>
+  <input type="text" value={otphandle===true?otp:id} id="in" className={st.input} placeholder={otphandle===true?"Enter your Otp":'Enter your Authority ID'} onChange={(e)=>{
+    if(otphandle===true){
+      setOtp(e.target.value)
+    }
+    else{
+      setId(e.target.value)
+    }
+   }}/>
+  <button className={st.button} onClick={otphandle===true?handleotp:handleauthreport} disabled={loading}>{loading?"Submitting...":"Submit"}</button>
 </div>
 
 
