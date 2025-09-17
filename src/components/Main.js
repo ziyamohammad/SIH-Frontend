@@ -133,8 +133,8 @@ const handlesubmit = async(e)=> {
             </div>
           </div>
 
+<div className={styl.footer}>© 2025 Samudram. All rights reserved.</div>
         </div>
-
     {model && (
       <div className={styles.modal}>
         <div className={styles.innermodal}>
