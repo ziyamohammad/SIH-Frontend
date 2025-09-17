@@ -92,6 +92,7 @@ const handleotp = async(e) => {
 
 const handlecontact = async(e) => {
   e.preventDefault()
+  console.log(email,name,mssg)
   try {
     const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/sendmail",{
       gmail:email,
