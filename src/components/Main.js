@@ -66,6 +66,7 @@ const handleauthreport = async(e) =>{
 
 const handleotp = async(e) => {
   e.preventDefault()
+  console.log(otp)
  try {
    const response = await axios.post("https://sih-backend-dsdf.onrender.com/api/v1/user/verifyotp",{
      otp:otp
